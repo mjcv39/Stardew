@@ -46,7 +46,7 @@ const URL = process.env.URL || 'http://localhost:8123/index.html'; const SHOT = 
   ok(await p.locator('#toast.bad').count() === 1, 'invalid file rejected');
   await p.screenshot({ path: SHOT + '/ylf-farm.png', fullPage: true });
   // other pages
-  for (const r of ['#/calendar', '#/progress', '#/journal', '#/tools']) { await p.evaluate((h) => (location.hash = h), r); await p.waitForTimeout(80); ok(await p.locator('h1').first().innerText().then((t) => /Coming in Phase/.test(t)), r + ' is an honest placeholder'); }
+  for (const r of ['#/calendar', '#/progress', '#/journal', '#/tools']) { await p.evaluate((h) => (location.hash = h), r); await p.waitForTimeout(80); ok(await p.locator('#main').innerText().then((x) => x.length > 80 && !/Coming in Phase/.test(x)), r + ' is a real, working page'); }
   await p.evaluate(() => (location.hash = '#/guide/privacy')); await p.waitForTimeout(80); ok(await p.locator('text=What is stored, and where').count() === 1, 'privacy page');
   await p.screenshot({ path: SHOT + '/ylf-guide.png' });
   // prefs: dark + winter scenery + assistant off

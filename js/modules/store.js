@@ -6,7 +6,7 @@
   let st = null;
   const defaultPrefs = () => ({ theme: 'auto', seasonTheme: 'auto', assistant: true, assistantMin: false, autoSync: true, widgets: ['profile', 'connection', 'today', 'stats', 'goals', 'activity', 'birthdays', 'festivals', 'crops', 'fish'], calFilters: { birthdays: true, festivals: true, crops: true, fish: false, goals: true } });
   const blank = () => ({ version: 2, active: null, farms: {}, prefs: defaultPrefs() });
-  const blankFarm = (id, name) => ({ id, name, description: '', farmer: '', farmType: 'standard', source: 'manual', created: Date.now(), updated: Date.now(), date: { year: 1, season: 'Spring', day: 1 }, money: 500, totalEarned: null, weather: 'Sunny', facts: null, link: null, manual: {}, hearts: {}, goals: [], activity: [], memories: [], plantings: [], journal: [], albums: [], daily: {}, layouts: [], challenges: [] });
+  const blankFarm = (id, name) => ({ id, name, description: '', farmer: '', farmType: 'standard', source: 'manual', created: Date.now(), updated: Date.now(), date: { year: 1, season: 'Spring', day: 1 }, money: 500, totalEarned: null, weather: 'Sunny', facts: null, link: null, manual: {}, hearts: {}, goals: [], activity: [], memories: [], plantings: [], journal: [], gallery: [], albums: [], journalTags: [], prepare: {}, perfect: {}, daily: {}, layouts: [], challenges: [], giftPlan: {} });
 
   const normalize = () => {
     st.prefs = { ...defaultPrefs(), ...(st.prefs || {}) };
@@ -39,8 +39,8 @@
     S.state().active = id; S.save(); SDV.emit('farm-changed'); return f;
   };
   S.touch = (farm) => { farm.updated = Date.now(); S.save(); };
-  S.removeFarm = (id) => { const s = S.state(); delete s.farms[id]; if (s.active === id) s.active = Object.keys(s.farms)[0] || null; S.save(); SDV.emit('farm-changed'); };
-  S.wipe = () => { try { localStorage.removeItem(KEY); localStorage.removeItem(OLD); } catch (e) { /* ignore */ } st = blank(); S.save(); SDV.emit('farm-changed'); };
+  S.removeFarm = (id) => { const s = S.state(); delete s.farms[id]; if (SDV.media) SDV.media.clearFarm(id); if (s.active === id) s.active = Object.keys(s.farms)[0] || null; S.save(); SDV.emit('farm-changed'); };
+  S.wipe = () => { if (SDV.media) SDV.media.wipe(); try { localStorage.removeItem(KEY); localStorage.removeItem(OLD); } catch (e) { /* ignore */ } st = blank(); S.save(); SDV.emit('farm-changed'); };
 
   // Manual overrides (anything the player ticks by hand) — kept separate from automatically detected data.
   S.isChecked = (farm, id) => !!(farm && farm.manual && farm.manual[id]);

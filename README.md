@@ -8,10 +8,10 @@ Static site, no build step: open `index.html`, or `npm start` (tiny Node server 
 |---|---|---|
 | 1 | Redesign, six-place navigation, farm dashboard, farm profiles, manual entry, goals | ✅ built & tested |
 | 2 | Save import, Saves-folder sync, connection status, activity feed | ✅ built & tested (synthetic save) |
-| 3 | Progress tracker + Perfection | ⏳ not built (page says so) |
-| 4 | Seasonal calendar | ⏳ not built |
-| 5 | Journal, gallery, memories, year in review | ⏳ not built |
-| 6 | Planning tools (crops, fish, gifts, CC, daily, challenges, farm designer) | ⏳ not built |
+| 3 | Progress tracker, Perfection, villager profiles | ✅ built & tested |
+| 4 | Seasonal calendar, seasonal overview, prepare-for-next-season | ✅ built & tested |
+| 5 | Journal, memories, gallery/albums, year in review | ✅ built & tested |
+| 6 | Planning tools (daily, crops, fish, gifts, CC, challenges, farm designer) | ✅ built & tested |
 | 7 | Live connection: companion app, secure pairing, website connector | ✅ built & tested end-to-end with a **simulated** mod |
 | 7 | SMAPI mod (`companion/YourLittleFarmMod`) | ⚠️ source written, **not compiled or tested against the real game** |
 | 7 | Secure multi-device sync (relay) | ⏳ designed only, not built |
@@ -38,6 +38,7 @@ js/modules/           save · store · logic · activity · sync · recs · assi
 js/pages/             farm · guide · later (honest placeholders)
 tests/e2e.js          Playwright checks for dashboard/import (static server on :8123)
 tests/e2e-live.js     companion + pairing + security + live feed (simulated mod), 38 checks
+tests/e2e-sections.js progress, calendar, journal and planning tools (~80 checks)
 companion/            local companion app, SMAPI mod source, developer simulator
 ```
 ## Data accuracy

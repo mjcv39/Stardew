@@ -16,7 +16,7 @@
       <tr><td>Your save file</td><td>Read in memory only, never stored</td><td><b>No.</b> Parsed in your browser.</td></tr>
       <tr><td>Farm summary (date, gold, friendships, collections…), goals, activity, settings</td><td>This browser's localStorage (${kb} KB used, ${U.plural(farms.length, 'farm')})</td><td><b>No.</b></td></tr>
       <tr><td>Link to your Saves folder</td><td>This browser's IndexedDB (a permission handle, not the files)</td><td><b>No.</b></td></tr>
-      <tr><td>Journal photos (when added later)</td><td>This browser's IndexedDB</td><td><b>No.</b></td></tr>
+      <tr><td>Journal &amp; gallery photos, farm-designer reference screenshots</td><td>This browser's IndexedDB</td><td><b>No.</b></td></tr>
       <tr><td>Companion pairing token (if you connect the companion)</td><td>This browser's localStorage; the companion stores only a hash on your PC</td><td><b>No</b> — it only talks to <code>127.0.0.1</code> on your own computer.</td></tr>
       <tr><td>Fonts</td><td>Loaded from Google Fonts</td><td>Your browser asks Google for the font files.</td></tr></table>
       <p><b>Nothing is stored on any server by this app</b> — there is no account and no cloud sync yet. Clearing browser data erases everything, so export a backup now and then. Because the site is static, anyone who can open your device's browser profile can see your data; there are no public links.</p>
@@ -32,15 +32,15 @@
     <li>This is a fan project and is not affiliated with ConcernedApe or Stardew Valley.</li></ul>
     <h3>What is built</h3><ul class="plain"><li>✅ Phase 1 — redesign, navigation, farm dashboard, farm profiles, manual entry, goals</li><li>✅ Phase 2 — save import with preview, saves-folder sync, connection status, activity feed</li>
     <li>🟡 Phase 7 — <b>companion app + website connector + secure pairing: built and tested</b> (with a <i>simulated</i> mod). <b>The SMAPI mod itself is written but NOT compiled or tested against the real game</b>, so real-time in-game events are unverified. Remote/multi-device sync is not built.</li>
-    <li>⏳ Phase 3 Progress · Phase 4 Calendar · Phase 5 Journal · Phase 6 Planning tools · Phase 8 polish — not built yet; their pages say so honestly.</li></ul></div></section></div>`;
+    <li>✅ Phase 3 Progress (tracker, Perfection, villager profiles) · Phase 4 Calendar (month, seasonal overview, prepare-for-next-season) · Phase 5 Journal (diary, memories, gallery, year in review) · Phase 6 Planning tools (daily, crops, fish, gifts, Community Center, challenges, farm designer) — built and tested against a synthetic save, not yet against many real saves.</li><li>⏳ Phase 8 polish (more animation, performance tuning, broader real-save testing) is ongoing.</li></ul></div></section></div>`;
 
   G.render = ({ parts }) => { const tab = parts[1] || ''; return `<div class="page guide"><div class="hero-card"><div class="moss-big">${SDV.art.moss('think')}</div><div class="hero-t"><span class="eyebrow">My Little Guide</span><h1>Moss & settings</h1><p>Make the farm yours, and see exactly how your data is handled.</p></div></div>
     <div class="tabs">${TABS.map(([k, l]) => `<a class="tab ${k === tab ? 'on' : ''}" href="#/guide${k ? '/' + k : ''}">${l}</a>`).join('')}</div>${tab === 'privacy' ? privacy() : tab === 'about' ? about() : settings()}</div>`; };
 
   G.bind = (root) => {
     U.$$('[data-pref]', root).forEach((el) => el.addEventListener('change', () => St.setPref(el.dataset.pref, el.type === 'checkbox' ? el.checked : el.value)));
-    const exp = U.$('#exp', root); if (exp) exp.addEventListener('click', () => U.download(`your-little-farm-backup-${new Date().toISOString().slice(0, 10)}.json`, St.exportAll()));
-    const imp = U.$('#imp', root); if (imp) imp.addEventListener('change', async () => { try { const text = await imp.files[0].text(); UI.confirm('Restore this backup? It replaces everything currently stored in this browser.', 'Restore', () => { St.importAll(text); U.toast('Backup restored', 'good'); }); } catch (e) { U.toast(e.message, 'bad'); } imp.value = ''; });
+    const exp = U.$('#exp', root); if (exp) exp.addEventListener('click', async () => { const o = JSON.parse(St.exportAll()); o.media = await SDV.media.exportAll(); U.download(`your-little-farm-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(o)); U.toast(`Backup saved${o.media.length ? ` (with ${U.plural(o.media.length, 'photo')})` : ''}`, 'good'); });
+    const imp = U.$('#imp', root); if (imp) imp.addEventListener('change', async () => { try { const text = await imp.files[0].text(); UI.confirm('Restore this backup? It replaces everything currently stored in this browser.', 'Restore', async () => { const o = JSON.parse(text); St.importAll(text); if (o.media) await SDV.media.importAll(o.media); U.toast('Backup restored', 'good'); }); } catch (e) { U.toast(e.message, 'bad'); } imp.value = ''; });
     const wipe = U.$('#wipe', root); if (wipe) wipe.addEventListener('click', () => UI.confirm('Delete ALL farms, goals and settings from this browser? Export a backup first if you might want them back.', 'Delete everything', () => { St.wipe(); U.toast('All data deleted.'); location.hash = '#/'; }));
   };
 })();

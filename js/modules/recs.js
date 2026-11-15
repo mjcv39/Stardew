@@ -29,7 +29,7 @@
     if (plantable.length && daysLeft > 7 && !lastChance.length) { const best = plantable.slice().sort((a, b) => (b.c.sell / b.c.days) - (a.c.sell / a.c.days))[0]; add({ id: 'bestcrop-' + d.season + d.day, icon: [best.c.name, 'crop'], prio: 40, basis: 'calendar', href: '#/tools/crops', title: `${best.c.name} still has time to pay off`, detail: `${best.c.days}-day crop, ${best.p.harvests} harvest${best.p.harvests > 1 ? 's' : ''} possible if planted today.` }); }
 
     // Community Center items obtainable right now
-    if (f && L.route(farm) === 'cc') {
+    if (f && L.route(farm) !== 'joja') {
       const bs = L.bundleState(farm); const avail = [];
       for (const b of D.bundles) { const st = bs[b.id]; if (!st.known || st.done) continue; for (const item of st.missing) if (L.availableNow(item, d.season)) avail.push({ item, b }); }
       if (avail.length) { const top = avail.slice(0, 4); add({ id: 'cc-' + d.season + d.day, icon: ['Community Center', 'bundle'], prio: 70, href: '#/progress', title: `${avail.length} missing Community Center item${avail.length > 1 ? 's' : ''} in season now`, detail: top.map((x) => `${x.item} (${x.b.name})`).join(', ') + (avail.length > 4 ? '…' : '') }); }

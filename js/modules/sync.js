@@ -39,9 +39,10 @@
       const missing = SDV.save.coverage(facts).filter((c) => !c.ok).map((c) => c.label);
       farm.imports = [{ at: now, source: link.mode, fileName: link.fileName || '', parserVersion: facts.parserVersion, changes: events.filter((e) => !IGN.includes(e.kind)).length, unreadable: missing }, ...(farm.imports || [])].slice(0, 20);
     }
+    const newMem = SDV.memories ? SDV.memories.scan(farm, isNew ? null : prev) : [];
     s.active = farm.id; St.touch(farm); SDV.emit('farm-changed');
-    if (announce) SDV.emit('synced', { farm, isNew, events });
-    return { farm, isNew, events };
+    if (announce) SDV.emit('synced', { farm, isNew, events, newMem });
+    return { farm, isNew, events, newMem };
   };
 
   /* ---- Stage 2: remembered Saves folder (File System Access API) ---- */

@@ -40,7 +40,10 @@
     for (const b of D.bundles) {
       const flags = f && f.bundles[b.bundleId];
       if (flags && flags.length === b.items.length) { const have = flags.filter(Boolean).length; out[b.id] = { known: true, have, need: b.need, done: have >= b.need, missing: b.items.filter((_, i) => !flags[i]) }; }
-      else out[b.id] = { known: false, have: 0, need: b.need, done: St.isChecked(farm, 'bundle:' + b.id), missing: b.items };
+      else { // no save data for this bundle: use the player's own item ticks (or a whole-bundle tick)
+        const ticked = b.items.map((_, i) => St.isChecked(farm, `bi:${b.id}:${i}`)); const have = ticked.filter(Boolean).length;
+        out[b.id] = { known: false, have, need: b.need, done: have >= b.need || St.isChecked(farm, 'bundle:' + b.id), missing: b.items.filter((_, i) => !ticked[i]), ticked };
+      }
     }
     return out;
   };
@@ -64,5 +67,19 @@
     if (!f.buildings.some((b) => /Barn/.test(b))) out.push({ name: 'Barn', cost: 6000 });
     if (!f.buildings.includes('Silo')) out.push({ name: 'Silo', cost: 100 });
     return out.sort((a, b) => a.cost - b.cost);
+  };
+  // Missing Community Center items (route-aware). Each: {bundle, item, seasons|null, known}
+  L.ccMissing = (farm) => {
+    if (L.route(farm) === 'joja') return [];
+    const bs = L.bundleState(farm), out = [];
+    for (const b of D.bundles) { const st = bs[b.id]; if (st.done || b.room === 'Vault') continue; st.missing.forEach((item) => out.push({ bundle: b, item, seasons: L.itemSeasons(item), known: st.known, need: Math.max(0, b.need - st.have) })); }
+    return out;
+  };
+  // Availability of an item from a date: now? or in how many days (null = no seasonal data)
+  L.availability = (seasons, date) => {
+    if (!seasons) return { now: null, startsIn: null };
+    if (seasons.includes(date.season)) return { now: true, startsIn: 0 };
+    for (let i = 1; i <= 112; i++) { const d = U.addDays(date, i); if (seasons.includes(d.season)) return { now: false, startsIn: i, season: d.season }; }
+    return { now: false, startsIn: null };
   };
 })();
