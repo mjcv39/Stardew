@@ -60,10 +60,10 @@
   };
   UI.rerender = () => { UI._keepScroll = true; UI.route(); };
   window.addEventListener('hashchange', UI.route);
-  ['farm-changed', 'sync-status', 'prefs', 'store'].forEach((e) => SDV.on(e, () => { if (!document.querySelector('.modal')) UI.rerender(); else UI.refreshChrome(); }));
+  ['farm-changed', 'sync-status', 'prefs', 'store', 'live-age'].forEach((e) => SDV.on(e, () => { if (!document.querySelector('.modal')) UI.rerender(); else UI.refreshChrome(); }));
 
   UI.boot = () => {
-    St.load(); SDV.sync.startWatching();
+    St.load(); SDV.sync.startWatching(); if (SDV.live.paired()) SDV.live.start();
     $('#brand').innerHTML = `${SDV.art.moss('happy')}<span><b>Your Little Farm</b><small>a cozy Stardew companion</small></span>`;
     if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', UI.applyTheme);
     UI.route();

@@ -105,3 +105,10 @@ body[data-theme=dark] .tag.auto { background: #2f4a2a; color: #cfe8c0; } body[da
 }
 @media (max-width: 520px) { .brand span { display: none; } .top-right { min-width: 0; flex: 1; justify-content: flex-end; } .pill { max-width: 150px; overflow: hidden; text-overflow: ellipsis; } #connPill .pill { font-size: .66rem; padding: 3px 8px; } #farmPick select { max-width: 110px; } .moss-big .art { width: 60px; height: 66px; } .hero-card { padding: 12px 14px; } .brand b { font-size: 14px; } .brand .art { width: 30px; height: 34px; } .bubble { font-size: .82rem; } .skill { grid-template-columns: 62px 1fr 20px; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } #particles { display: none; } }
+
+.tag.live { background: #cfe9f6; border-color: #6aa8cf; color: #1d4a68; } .tag.sim { background: #f3d7f0; border-color: #b97ab0; color: #5a2a55; } body[data-theme=dark] .tag.live { background: #234257; color: #cfe9f6; }
+.liveblock { margin: 10px 0; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, #6aa8cf 18%, var(--paper2)); border: 2px solid #6aa8cf55; } .liveblock h4 { margin: 0 0 6px; }
+.honest { background: #fbe7c0; border: 2px solid #d9a84a; color: #5e4010; padding: 8px 12px; border-radius: 10px; font-size: .88rem; margin: 8px 0; } body[data-theme=dark] .honest { background: #4a3a1a; color: #f0d9a0; }
+.stepn { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--yellow); color: #4a3626; font-family: var(--body); font-size: .9rem; } .stepn.done { background: var(--sage); }
+.cmd { display: inline-flex; gap: 8px; align-items: center; margin: 4px 0; } .status-line { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--paper2); border-radius: 10px; font-weight: 700; } .inline { display: flex; gap: 8px; } .inline input { flex: 1; font-size: 1.2rem; letter-spacing: .2em; text-align: center; }
+.connect .widgets { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } .connect .hero-card .pill { margin-left: auto; }

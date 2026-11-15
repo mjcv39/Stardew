@@ -18,7 +18,7 @@
     <stats><Values><item><key><string>itemsShipped</string></key><value><unsignedInt>8</unsignedInt></value></item><item><key><string>fishCaught</string></key><value><unsignedInt>3</unsignedInt></value></item></Values></stats>
     <items><Item xsi:type="Axe"><name>Steel Axe</name><upgradeLevel>2</upgradeLevel></Item><Item xsi:type="Pickaxe"><upgradeLevel>1</upgradeLevel></Item><Item xsi:type="WateringCan"><upgradeLevel>3</upgradeLevel></Item><Item xsi:type="Hoe"><upgradeLevel>2</upgradeLevel></Item></items>
   </player>
-  <year>2</year><currentSeason>fall</currentSeason><dayOfMonth>12</dayOfMonth><whichFarm>1</whichFarm><goldenWalnutsFound>17</goldenWalnutsFound><weatherForTomorrow>1</weatherForTomorrow>
+  <uniqueIDForThisGame>123456789</uniqueIDForThisGame><gameVersion>1.6.8</gameVersion><year>2</year><currentSeason>fall</currentSeason><dayOfMonth>12</dayOfMonth><whichFarm>1</whichFarm><goldenWalnutsFound>17</goldenWalnutsFound><weatherForTomorrow>1</weatherForTomorrow>
   <bundles><item><key><int>0</int></key><value><ArrayOfBoolean><boolean>true</boolean><boolean>true</boolean><boolean>false</boolean><boolean>false</boolean></ArrayOfBoolean></value></item></bundles>
   <locations><GameLocation xsi:type="Farm"><buildings><Building><buildingType>Big Coop</buildingType></Building><Building><buildingType>Barn</buildingType></Building><Building><buildingType>Silo</buildingType></Building></buildings>
     <animals><item><key><long>1</long></key><value><FarmAnimal><type>White Chicken</type></FarmAnimal></value></item></animals></GameLocation>

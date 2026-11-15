@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Build with the .NET 6 SDK. ModBuildConfig finds your game folder and copies the mod into Mods/ on build.
+       https://stardewvalleywiki.com/Modding:Modder_Guide/Get_Started -->
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>YourLittleFarmMod</AssemblyName>
+    <RootNamespace>YourLittleFarm</RootNamespace>
+    <Version>0.1.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableModDeploy>true</EnableModDeploy>
+    <EnableModZip>true</EnableModZip>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.1.1" />
+  </ItemGroup>
+</Project>

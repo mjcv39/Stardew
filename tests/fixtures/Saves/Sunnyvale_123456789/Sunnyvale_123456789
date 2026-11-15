@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <player>
+    <name>Testy</name><farmName>Sunnyvale</farmName><money>12345</money><totalMoneyEarned>68000</totalMoneyEarned><millisecondsPlayed>36000000</millisecondsPlayed>
+    <farmingLevel>10</farmingLevel><miningLevel>6</miningLevel><foragingLevel>5</foragingLevel><fishingLevel>7</fishingLevel><combatLevel>4</combatLevel>
+    <houseUpgradeLevel>1</houseUpgradeLevel><spouse>Abigail</spouse><deepestMineLevel>135</deepestMineLevel><hasRustyKey>true</hasRustyKey>
+    <mailReceived><string>ccPantry</string><string>ccCraftsRoom</string><string>ccVault</string><string>willyBoatFixed</string><string>CF_Fair</string><string>CF_Mines</string></mailReceived>
+    <friendshipData>
+      <item><key><string>Abigail</string></key><value><Friendship><Points>2750</Points><Status>Married</Status><GiftsThisWeek>1</GiftsThisWeek></Friendship></value></item>
+      <item><key><string>Sam</string></key><value><Friendship><Points>1300</Points><Status>Friendly</Status></Friendship></value></item>
+    </friendshipData>
+    <basicShipped><item><key><string>(O)24</string></key><value><int>5</int></value></item><item><key><string>(O)254</string></key><value><int>3</int></value></item></basicShipped>
+    <fishCaught><item><key><string>(O)128</string></key><value><ArrayOfInt><int>2</int><int>30</int></ArrayOfInt></value></item><item><key><string>(O)139</string></key><value><ArrayOfInt><int>1</int><int>20</int></ArrayOfInt></value></item></fishCaught>
+    <archaeologyFound><item><key><string>(O)107</string></key><value><ArrayOfInt><int>1</int><int>1</int></ArrayOfInt></value></item></archaeologyFound>
+    <mineralsFound><item><key><int>80</int></key><value><int>3</int></value></item><item><key><int>72</int></key><value><int>1</int></value></item></mineralsFound>
+    <cookingRecipes><item><key><string>Fried Egg</string></key><value><int>1</int></value></item><item><key><string>Omelet</string></key><value><int>0</int></value></item></cookingRecipes>
+    <craftingRecipes><item><key><string>Wood Fence</string></key><value><int>5</int></value></item></craftingRecipes>
+    <stats><Values><item><key><string>itemsShipped</string></key><value><unsignedInt>8</unsignedInt></value></item><item><key><string>fishCaught</string></key><value><unsignedInt>3</unsignedInt></value></item></Values></stats>
+    <items><Item xsi:type="Axe"><name>Steel Axe</name><upgradeLevel>2</upgradeLevel></Item><Item xsi:type="Pickaxe"><upgradeLevel>1</upgradeLevel></Item><Item xsi:type="WateringCan"><upgradeLevel>3</upgradeLevel></Item><Item xsi:type="Hoe"><upgradeLevel>2</upgradeLevel></Item></items>
+  </player>
+  <uniqueIDForThisGame>123456789</uniqueIDForThisGame><gameVersion>1.6.8</gameVersion><year>2</year><currentSeason>fall</currentSeason><dayOfMonth>12</dayOfMonth><whichFarm>1</whichFarm><goldenWalnutsFound>17</goldenWalnutsFound><weatherForTomorrow>1</weatherForTomorrow>
+  <bundles><item><key><int>0</int></key><value><ArrayOfBoolean><boolean>true</boolean><boolean>true</boolean><boolean>false</boolean><boolean>false</boolean></ArrayOfBoolean></value></item></bundles>
+  <locations><GameLocation xsi:type="Farm"><buildings><Building><buildingType>Big Coop</buildingType></Building><Building><buildingType>Barn</buildingType></Building><Building><buildingType>Silo</buildingType></Building></buildings>
+    <animals><item><key><long>1</long></key><value><FarmAnimal><type>White Chicken</type></FarmAnimal></value></item></animals></GameLocation>
+    <GameLocation xsi:type="LibraryMuseum"><museumPieces><item><key><Vector2><X>1</X><Y>1</Y></Vector2></key><value><int>107</int></value></item><item><key><Vector2><X>2</X><Y>1</Y></Vector2></key><value><int>72</int></value></item></museumPieces></GameLocation>
+    <GameLocation xsi:type="FarmHouse"><characters><NPC xsi:type="Child"><name>Baby</name></NPC></characters></GameLocation></locations>
+</SaveGame>

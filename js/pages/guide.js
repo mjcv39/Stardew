@@ -17,6 +17,7 @@
       <tr><td>Farm summary (date, gold, friendships, collections…), goals, activity, settings</td><td>This browser's localStorage (${kb} KB used, ${U.plural(farms.length, 'farm')})</td><td><b>No.</b></td></tr>
       <tr><td>Link to your Saves folder</td><td>This browser's IndexedDB (a permission handle, not the files)</td><td><b>No.</b></td></tr>
       <tr><td>Journal photos (when added later)</td><td>This browser's IndexedDB</td><td><b>No.</b></td></tr>
+      <tr><td>Companion pairing token (if you connect the companion)</td><td>This browser's localStorage; the companion stores only a hash on your PC</td><td><b>No</b> — it only talks to <code>127.0.0.1</code> on your own computer.</td></tr>
       <tr><td>Fonts</td><td>Loaded from Google Fonts</td><td>Your browser asks Google for the font files.</td></tr></table>
       <p><b>Nothing is stored on any server by this app</b> — there is no account and no cloud sync yet. Clearing browser data erases everything, so export a backup now and then. Because the site is static, anyone who can open your device's browser profile can see your data; there are no public links.</p>
       <p class="muted">Syncing to another device securely would need an encrypted relay or your own companion app (planned, not built). Until then, use backup/restore.</p></div></section>
@@ -29,8 +30,9 @@
     <li><b>Save detection</b> is built for the 1.5/1.6 save layout and verified against a synthetic test save, not yet against many real saves. Community Center bundle ids are validated by item count before use.</li>
     <li><b>Art</b>: all illustrations and sprites are original and drawn in code; no game art is included. Moss is an original character.</li>
     <li>This is a fan project and is not affiliated with ConcernedApe or Stardew Valley.</li></ul>
-    <h3>What is built</h3><ul class="plain"><li>✅ Phase 1 — redesign, navigation, farm dashboard, farm profiles, manual entry, goals</li><li>✅ Phase 2 — save import, saves-folder sync, connection status, activity feed</li>
-    <li>⏳ Phase 3 Progress · Phase 4 Calendar · Phase 5 Journal · Phase 6 Planning tools · Phase 7 Live game connection · Phase 8 polish — not built yet; their pages say so honestly.</li></ul></div></section></div>`;
+    <h3>What is built</h3><ul class="plain"><li>✅ Phase 1 — redesign, navigation, farm dashboard, farm profiles, manual entry, goals</li><li>✅ Phase 2 — save import with preview, saves-folder sync, connection status, activity feed</li>
+    <li>🟡 Phase 7 — <b>companion app + website connector + secure pairing: built and tested</b> (with a <i>simulated</i> mod). <b>The SMAPI mod itself is written but NOT compiled or tested against the real game</b>, so real-time in-game events are unverified. Remote/multi-device sync is not built.</li>
+    <li>⏳ Phase 3 Progress · Phase 4 Calendar · Phase 5 Journal · Phase 6 Planning tools · Phase 8 polish — not built yet; their pages say so honestly.</li></ul></div></section></div>`;
 
   G.render = ({ parts }) => { const tab = parts[1] || ''; return `<div class="page guide"><div class="hero-card"><div class="moss-big">${SDV.art.moss('think')}</div><div class="hero-t"><span class="eyebrow">My Little Guide</span><h1>Moss & settings</h1><p>Make the farm yours, and see exactly how your data is handled.</p></div></div>
     <div class="tabs">${TABS.map(([k, l]) => `<a class="tab ${k === tab ? 'on' : ''}" href="#/guide${k ? '/' + k : ''}">${l}</a>`).join('')}</div>${tab === 'privacy' ? privacy() : tab === 'about' ? about() : settings()}</div>`; };

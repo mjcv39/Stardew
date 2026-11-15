@@ -22,18 +22,18 @@ const URL = process.env.URL || 'http://localhost:8123/index.html'; const SHOT = 
   ok(await p.locator('.goal b').first().innerText() === 'Save for a barn', 'goal added'); await p.click('[data-gdone]'); await p.waitForTimeout(100);
   ok(await p.locator('.tab:has-text("Completed (1)")').count() === 1, 'goal completed moves tab count');
   // import save into this profile
-  const save = path.join(__dirname, 'sample-save.xml'); await p.setInputFiles('#saveFile', save); await p.waitForTimeout(500);
-  ok(await p.locator('#connPill').innerText().then((t) => /save import/.test(t)), 'status: connected through save import');
+  const save = path.join(__dirname, 'sample-save.xml'); await p.setInputFiles('#saveFile', save); await p.waitForSelector('#pvApply'); ok(await p.locator('.modal').innerText().then((x) => /Sunnyvale/i.test(x) && /Testy/i.test(x) && /Story route/i.test(x)), 'import preview shows farm, farmer and route before applying'); ok((await p.evaluate(() => SDV.store.active().facts)) === null, 'nothing applied before confirming'); await p.click('#pvApply'); await p.waitForTimeout(400);
+  ok(await p.locator('#connPill').innerText().then((t) => /Save imported/.test(t)), 'status: save imported — manual refresh required');
   ok(await p.locator('.widget[data-w=stats]').innerText().then((t) => /Fish caught/.test(t)), 'stats from save shown');
   const f = await p.evaluate(() => SDV.store.active().facts);
   ok(f.farmer === 'Testy' && f.money === 12345 && f.date.season === 'Fall' && f.date.day === 12, 'facts parsed (farmer, gold, date)');
-  ok(f.museumDonated.length === 2 && f.stats.itemsShipped === 8 && f.fishTotal === 3, 'museum/stats/fish totals parsed');
+  ok(f.museumDonated.length === 2 && f.stats.itemsShipped === 8 && f.fishTotal === 3 && f.saveId === '123456789', 'museum/stats/fish totals parsed');
   ok(f.bundles['0'] && f.bundles['0'].length === 4, 'bundle flags parsed');
   ok((await p.evaluate(() => SDV.store.farms().length)) === 1, 'imported into the current profile (no duplicate)');
   ok((await p.evaluate(() => SDV.store.active().goals.length)) === 1, 'goals preserved through import');
   // second import with changes -> activity diff
   let x = fs.readFileSync(save, 'utf8').replace('<dayOfMonth>12</dayOfMonth>', '<dayOfMonth>14</dayOfMonth>').replace('<money>12345</money>', '<money>20000</money>').replace('<Points>1300</Points>', '<Points>1800</Points>').replace('</fishCaught>', '<item><key><string>(O)143</string></key><value><ArrayOfInt><int>1</int><int>20</int></ArrayOfInt></value></item></fishCaught>').replace('<buildingType>Silo</buildingType>', '<buildingType>Silo</buildingType></Building><Building><buildingType>Well</buildingType>').replace('<deepestMineLevel>135</deepestMineLevel>', '<deepestMineLevel>140</deepestMineLevel>').replace('<mailReceived>', '<mailReceived><string>ccBoilerRoom</string>');
-  const tmp = path.join(SHOT, 'sample2.xml'); fs.writeFileSync(tmp, x); await p.setInputFiles('#saveFile', tmp); await p.waitForTimeout(500);
+  const tmp = path.join(SHOT, 'sample2.xml'); fs.writeFileSync(tmp, x); await p.setInputFiles('#saveFile', tmp); await p.waitForSelector('#pvApply'); await p.click('#pvApply'); await p.waitForTimeout(400);
   const acts = await p.evaluate(() => SDV.store.active().activity.map((e) => e.text));
   console.log('activity:', acts);
   ok(acts.some((t) => /Catfish/.test(t)) && acts.some((t) => /Sam.*hearts|Sam is now/.test(t)) && acts.some((t) => /Built: Well/.test(t)) && acts.some((t) => /Boiler Room/.test(t)) && acts.some((t) => /Skull Cavern floor 20/.test(t)), 'activity feed lists real changes (fish, friendship, building, unlock, depth)');

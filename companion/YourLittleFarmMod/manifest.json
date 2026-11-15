@@ -1,0 +1,9 @@
+{
+  "Name": "Your Little Farm Connector",
+  "Author": "Your Little Farm",
+  "Version": "0.1.0",
+  "Description": "Sends minimal live farm snapshots to the Your Little Farm companion app running on this computer.",
+  "UniqueID": "YourLittleFarm.Connector",
+  "EntryDll": "YourLittleFarmMod.dll",
+  "MinimumApiVersion": "4.0.0"
+}
