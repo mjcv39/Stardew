@@ -105,18 +105,10 @@
     { id: 'forest', name: 'Forest Farm', info: 'Foraging bonus; wood grows. Smaller farmland.' }, { id: 'hilltop', name: 'Hill-top Farm', info: 'Mining on the farm: Ore on farmland. Combat on farm.' },
     { id: 'wilderness', name: 'Wilderness Farm', info: 'Monsters spawn at night; combat bonus.' }, { id: 'fourcorners', name: 'Four Corners Farm', info: 'Four-quadrant layout, ideal for co-op.' }, { id: 'beach', name: 'Beach Farm', info: 'Sand & ocean on the farm.' },
   ];
-  D.areas = [
-    { id: 'the-mines', name: 'The Mines', info: D.mines.overview, kind: 'Dungeon' },
-    { id: 'skull-cavern', name: 'Skull Cavern', info: D.skull.overview, kind: 'Dungeon' },
-    { id: 'ginger-island', name: 'Ginger Island', info: D.ginger.unlock, kind: 'Island' },
-    { id: 'community-center', name: 'Community Center', info: 'Complete bundles for rewards. Six rooms: Crafts, Pantry, Fish Tank, Boiler, Bulletin, Vault.', kind: 'Story' },
-    { id: 'jojamart', name: 'JojaMart route', info: D.joja.note, kind: 'Story' },
-    { id: 'secret-woods', name: 'Secret Woods', info: 'Reached with Steel Axe through the Cindersap Forest log. Hardwood, Morel, Fiddlehead Fern.', kind: 'Area' },
-    { id: 'sewers', name: 'The Sewers', info: 'Krobus lives here. Requires Rusty Key.', kind: 'Area' },
-    { id: 'quarry', name: 'The Quarry', info: 'Reached after bridge repair. Quarry Mine on Mountain.', kind: 'Area' },
-    { id: 'calico-desert', name: 'Calico Desert', info: 'Via Bus after repair. Sandy\'s Oasis; Skull Cavern entrance.', kind: 'Area' },
-    { id: 'witches-swamp', name: 'Witch\'s Swamp', info: 'Accessible after the Dark Talisman events. Void Salmon can be fished here.', kind: 'Area' },
-    { id: 'mutant-bug-lair', name: 'Mutant Bug Lair', info: 'Hidden area beyond the Sewers; the Dark Talisman is found here.', kind: 'Area' },
-    { id: 'volcano-dungeon', name: 'Volcano Dungeon', info: '10-floor Ginger Island dungeon; Dwarvish Sentries and Magma Sprites; forge weapons.', kind: 'Dungeon' },
-  ];
+  // Bundle ids as used in save files (best-effort; validated against item counts at import time)
+  const BID = { 'Spring Crops': 0, 'Summer Crops': 1, 'Fall Crops': 2, 'Quality Crops': 3, Animal: 4, Artisan: 5, 'River Fish': 6, 'Lake Fish': 7, 'Ocean Fish': 8, 'Night Fishing': 9, 'Specialty Fish': 10, 'Crab Pot': 11,
+    'Spring Foraging': 13, 'Summer Foraging': 14, 'Fall Foraging': 15, 'Winter Foraging': 16, Construction: 17, 'Exotic Foraging': 19, "Blacksmith's": 20, "Geologist's": 21, "Adventurer's": 22,
+    "Chef's": 23, Dye: 24, 'Field Research': 25, Fodder: 26, "Enchanter's": 27, '2,500g': 31, '5,000g': 32, '10,000g': 33, '25,000g': 34 };
+  D.bundles.forEach((b) => { b.bundleId = BID[b.name]; });
+  D.toolUpgrades = { tiers: [{ tier: 'Copper', cost: '2,000g + 5 Copper Bar', gold: 2000 }, { tier: 'Steel', cost: '5,000g + 5 Iron Bar', gold: 5000 }, { tier: 'Gold', cost: '10,000g + 5 Gold Bar', gold: 10000 }, { tier: 'Iridium', cost: '25,000g + 5 Iridium Bar', gold: 25000 }], tools: ['Axe', 'Pickaxe', 'Hoe', 'Watering Can'] };
 })();

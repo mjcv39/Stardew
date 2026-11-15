@@ -32,36 +32,6 @@
     { season: 'Winter', day: 28, text: 'Year ends. Year 2 starts (Kent returns, new shop stock).' },
   ];
 
-  const Q = (name, giver, how, reward) => ({ id: slug(name), name, giver, kind: 'Story', how, reward });
-  D.quests = [
-    Q('Introductions', 'Lewis', 'Meet every villager in Pelican Town.', 'Progress'),
-    Q('Getting Started', 'Lewis', 'Harvest a Parsnip.', 'Progress'),
-    Q('Raising Animals', 'Marnie', 'Build a Coop and raise a Chicken.', 'Progress'),
-    Q('Archaeology', 'Gunther', 'Find an artifact and donate it to the Museum.', 'Museum progress'),
-    Q('Meet the Wizard', 'Wizard', 'Visit the Wizard\'s Tower.', 'Progress'),
-    Q('Forging Ahead', 'Clint', 'Bring Clint 5 Copper Bars.', 'Progress'),
-    Q('Smelting', 'Clint', 'Smelt a Copper Bar.', 'Progress'),
-    Q('Initiation', 'Marlon', 'Kill 10 Slimes in the Mines.', 'Adventurer\'s Guild progress'),
-    Q('Robin\'s Lost Axe', 'Robin', 'Find Robin\'s axe in the forest.', 'Friendship'),
-    Q('Jodi\'s Request', 'Jodi', 'Bring Jodi a Cauliflower.', 'Gold'),
-    Q('Mayor\'s "Shorts"', 'Lewis', 'Find Lewis\'s missing purple shorts.', 'Friendship'),
-    Q('Blackberry Basket', 'Linus', 'Find Linus\'s lost blackberry basket.', 'Friendship'),
-    Q('Marnie\'s Request', 'Marnie', 'Bring Marnie a Cave Carrot.', 'Gold'),
-    Q('Pam Is Thirsty', 'Pam', 'Bring Pam a Pale Ale.', 'Gold'),
-    Q('Cow\'s Delight', 'Marnie', 'Bring Marnie an Amaranth.', 'Gold'),
-    Q('Dark Talisman', 'Krobus / Wizard', 'Recover the Dark Talisman.', 'Access to the Witch\'s Swamp'),
-  ];
-  D.specialOrders = [
-    ['Island Ingredients', 'Caroline', 'Deliver Ginger Island ingredients.'], ['Cave Patrol', 'Clint', 'Defeat monsters in the Mines.'],
-    ['Aquatic Overpopulation', 'Demetrius', 'Catch and release fish for the lake.'], ['Biome Balance', 'Demetrius', 'Stock fish tanks for balance.'],
-    ['Rock Rejuvenation', 'Emily', 'Deliver minerals Emily asks for.'], ['Fragments of the Past', 'Gunther', 'Deliver bones and fossils.'],
-    ['Gus\' Famous Omelet', 'Gus', 'Deliver a large batch of Omelets.'], ['Crop Order', 'Lewis', 'Deliver a mix of in-season crops.'],
-    ['Community Cleanup', 'Lewis', 'Collect trash around the town.'], ['Pierre\'s Prime Produce', 'Pierre', 'Deliver high-quality crops.'],
-    ['Robin\'s Project', 'Robin', 'Deliver Hardwood.'], ['Robin\'s Resource Rush', 'Robin', 'Deliver building resources.'],
-    ['Juicy Bugs Wanted!', 'Linus', 'Deliver bug meat.'], ['Tropical Fish', 'Willy', 'Catch Ginger Island fish.'],
-    ['A Curious Substance', 'Wizard', 'Deliver Void-related items.'], ['Prismatic Jelly', 'Wizard', 'Complete the Prismatic Jelly mission.'],
-  ].map(([name, giver, req]) => ({ id: slug(name), name, giver, kind: 'Special Order', req, reward: 'Gold / items (see the in-game board)' }));
-
   const Ac = (name, desc, cat) => ({ id: slug(name), name, desc, cat });
   D.achievements = [
     Ac('Greenhorn', 'Earn 15,000g.', 'Money'), Ac('Cowpoke', 'Earn 50,000g.', 'Money'), Ac('Homesteader', 'Earn 250,000g.', 'Money'), Ac('Millionaire', 'Earn 1,000,000g.', 'Money'), Ac('Legend', 'Earn 10,000,000g.', 'Money'),
@@ -78,18 +48,5 @@
     Ac('Ship It', 'Ship every item.', 'Shipping'), Ac('Gofer', 'Complete 10 Help Wanted quests.', 'Quests'), Ac('A Big Help', 'Complete 40 Help Wanted quests.', 'Quests'),
     Ac('Prairie King', 'Beat Journey of the Prairie King.', 'Arcade'), Ac('Fector\'s Challenge', 'Beat Journey of the Prairie King without dying.', 'Arcade'),
     Ac('Perfectionist', 'Achieve 100% Perfection.', 'Perfection'),
-  ];
-  const Sc = (name, how, kind = 'Secret') => ({ id: slug(name), name, how, kind });
-  D.secrets = [
-    Sc('Secret Woods', 'Reached with a Steel Axe by clearing the large log in Cindersap Forest. Hardwood and rare forage.'),
-    Sc('Rusty Key (Sewers)', 'Donate 60 items to the Museum; Gunther gives the Rusty Key that opens the Sewers.', 'Unlockable'),
-    Sc('Skull Key', 'Found in the chest at the bottom of the Mines (floor 120). Opens the Skull Cavern.', 'Unlockable'),
-    Sc('Dwarvish Translation Guide', 'Donate all four Dwarf Scrolls to the Museum.', 'Unlockable'),
-    Sc('Dark Talisman', 'Found in the Mutant Bug Lair (Sewers). Needed for several Krobus / Witch events.', 'Unlockable'),
-    Sc('Mr. Qi\'s Club Card', 'Obtain the Club Card to enter the Casino in the Calico Desert.', 'Unlockable'),
-    Sc('Secret Notes', 'Read Secret Notes after getting the Magnifying Glass; they lead to hidden rewards around the valley.'),
-    Sc('Stardrops', 'Seven Stardrops: Mines floor 100 chest, Stardew Valley Fair (2,000 Star Tokens), Krobus\'s shop (20,000g), the Old Master Cannoli statue (Secret Woods), Master Angler, Museum completion, and your spouse at 13.5 hearts.', 'Unlockable'),
-    Sc('Pirate Cove', 'Ginger Island: hidden cove with a fun encounter and Gem Birds.'),
-    Sc('Parrot Express', 'Ginger Island: spend Golden Walnuts to unlock fast-travel stops.'),
   ];
 })();

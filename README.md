@@ -1,25 +1,39 @@
-# Pelican Companion — Stardew Valley wiki & farm dashboard
+# Your Little Farm
 
-A static, no-build web app: open `index.html` (or serve the folder with any static host, e.g. `python3 -m http.server`).
+A cozy, personal Stardew Valley companion: it reads **your** save file, shows what is happening on **your** farm, and (in later phases) tracks progression, keeps a scrapbook and offers planning tools. It is *not* a wiki.
+Static site, no build step: open `index.html`, or `npm start` (tiny Node server used for Railway).
 
-## Features
-- **Personalized dashboard** – date, gold, upcoming birthdays/festivals, crops to plant now (with last-plant date), fish catchable by season/weather/time, deadlines, next milestones.
-- **Interactive calendar** – birthdays with portraits, festivals, last day to plant, your logged plantings → harvest dates, goals, reminders; filters; click a day for details.
-- **Progress tracker** – story, exploration, collections (fish/museum checklists), relationships (hearts grid), farm development, wealth. Items are labelled **auto** (detected from the save) or **manual**.
-- **Wiki database** – 16 categories / 28 datasets (villagers, crops, fish, recipes, bundles, minerals, monsters, festivals…) with filters, table/card views, detail pages and cross-links ("used in recipes", "CC bundles", "loved by").
-- **Global search** with autocomplete (`/` to focus), category/season filters.
-- **Goals** with deadlines that show up on the calendar and dashboard.
-- **Multiple farms**, backup/restore (JSON).
+## Status by phase
+| Phase | Scope | Status |
+|---|---|---|
+| 1 | Redesign, six-place navigation, farm dashboard, farm profiles, manual entry, goals | ✅ built & tested |
+| 2 | Save import, Saves-folder sync, connection status, activity feed | ✅ built & tested (synthetic save) |
+| 3 | Progress tracker + Perfection | ⏳ not built (page says so) |
+| 4 | Seasonal calendar | ⏳ not built |
+| 5 | Journal, gallery, memories, year in review | ⏳ not built |
+| 6 | Planning tools (crops, fish, gifts, CC, daily, challenges, farm designer) | ⏳ not built |
+| 7 | SMAPI mod + local companion (live connection) | ⏳ not built — **nothing claims to be live** |
+| 8 | Polish | partly: Moss assistant, seasonal/night themes exist |
 
-## Save files & privacy
-Everything runs in the browser. The save is read with the File API and parsed by `js/save.js`; only a compact summary is kept in `localStorage`. Nothing is uploaded. A website cannot silently read your game folder, so you either pick the save file, or (Chrome/Edge) grant read access to your `Saves` folder once and re-sync with one click. Re-importing the same farm updates it in place and keeps goals/manual checks.
-Detection targets save formats 1.5/1.6 on a best-effort basis; anything not found is shown as manual. Museum counts are "found", not necessarily "donated". Mobile saves live in app-private storage and must be copied somewhere pickable.
+## How the farm connection really works
+- **Import** – you choose the save file; it is parsed in the browser (`js/modules/save.js`). Never uploaded.
+- **Saves folder (Chrome/Edge desktop)** – grant read access once; while the tab is open it re-checks every 15 s and can auto-import newer saves. Browsers cannot watch files in the background or without permission.
+- **Live in-game events** need a SMAPI mod + local companion app (Phase 7). The game only writes the save when you sleep.
+- Statuses shown: not connected · connected through save import · successfully synchronized · waiting for an updated save · (live — only when Phase 7 exists).
+- Automatic values are tagged `auto`; anything you type is tagged `manual`. Manual farms never show invented statistics.
 
-## Data accuracy — please read
-The sandbox this was built in could not reach stardewvalleywiki.com, so datasets in `js/data/` were **written from game knowledge, not scraped**. Fish, crops, bundles, birthdays and most gift loves are well covered; some lists are **intentionally partial** (likes/hates, weapons, monsters stats, special orders, heart-event details) and some values may be off. Every entry links to the official wiki page for verification. Data is plain structured JS — fix or extend it in one place and the whole app updates. A natural next step is a script that pulls the wiki's MediaWiki API into these files.
+## Privacy
+No server, no account. Everything lives in this browser (localStorage / IndexedDB). Export, restore and delete-everything are in *My Little Guide → Data & privacy*. Details are on that page.
 
-## Art
-Game art is copyrighted, so none is bundled. Every image is original pixel art drawn in code by `js/sprites.js` (item templates tinted to the real item colours) and `SDV.util.portrait` (villager portraits). They are recognisable stand-ins, not copies. To use your own art, edit `icon()` / `portrait()` in `js/core.js`.
-
-## Tests
-`node tests/smoke.js` (needs Playwright and a static server on :8123) loads ~700 routes, imports `tests/sample-save.xml`, and fails on JS errors.
+## Architecture
+```
+index.html            shell (scene, six-place nav, Moss)
+css/ylf.css           design system (seasonal + night themes)
+js/core.js art.js sprites.js    utilities · original SVG art · original pixel sprites
+js/data/*             pure game data (no UI)
+js/modules/           save · store · logic · activity · sync · recs · assistant · ui
+js/pages/             farm · guide · later (honest placeholders)
+tests/e2e.js          Playwright end-to-end checks (static server on :8123)
+```
+## Data accuracy
+Game data in `js/data/` was written from game knowledge because the official wiki was unreachable while building; it is not cross-checked line by line. Likes/hates, some prices and unlock details are partial. Save detection was verified against a synthetic 1.5/1.6-style save, not many real saves. Fan project, not affiliated with ConcernedApe; no game art is included (all art is original).

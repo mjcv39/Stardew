@@ -3,52 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pelican Companion – Stardew Valley Wiki &amp; Farm Dashboard</title>
-<meta name="description" content="A personalized Stardew Valley companion: wiki database, farm dashboard, seasonal calendar, progress tracker and goals. Your save never leaves your device.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css">
+<title>Your Little Farm</title>
+<meta name="description" content="Your Little Farm — a cozy, personal Stardew Valley companion that reads your save, tracks your progress and keeps your farm's story. Fan project; your save never leaves your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ylf.css">
 <link rel="icon" id="favicon" href="data:,">
 </head>
-<body>
+<body data-season="Spring" data-theme="light">
 <a class="skip" href="#main">Skip to content</a>
+<div id="sceneArt" aria-hidden="true"></div><div id="particles" aria-hidden="true"></div>
 <header id="topbar">
-  <button id="menuBtn" aria-label="Menu" class="px-btn">☰</button>
-  <a href="#/" class="brand"><span class="brand-ico">🌻</span><span class="brand-txt">Pelican<br>Companion</span></a>
-  <div id="searchWrap" role="search">
-    <input id="searchBox" type="search" placeholder="Search fish, villagers, crops, recipes…  ( / )" autocomplete="off" aria-label="Global search">
-    <div id="suggest" hidden></div>
-  </div>
-  <div id="farmPick"></div>
+  <a href="#/" id="brand" class="brand" aria-label="Your Little Farm — home"></a>
+  <nav id="places" class="places" aria-label="Main"></nav>
+  <div class="top-right"><div id="farmPick"></div><div id="connPill"></div></div>
 </header>
-<div id="layout">
-  <nav id="sidenav" aria-label="Main"></nav>
-  <main id="main" tabindex="-1"></main>
-</div>
-<div id="modalRoot"></div>
-<div id="toast" role="status"></div>
+<main id="main" tabindex="-1"></main>
+<nav id="tabbar" class="tabbar" aria-label="Main (mobile)"></nav>
+<div id="modalRoot"></div><div id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/core.js"></script>
 <script src="js/sprites.js"></script>
+<script src="js/art.js"></script>
 <script src="js/data/villagers.js"></script>
 <script src="js/data/crops.js"></script>
 <script src="js/data/fish.js"></script>
 <script src="js/data/animals_forage.js"></script>
 <script src="js/data/cooking_crafting.js"></script>
 <script src="js/data/collections.js"></script>
-<script src="js/data/gear_monsters.js"></script>
 <script src="js/data/world.js"></script>
 <script src="js/data/events.js"></script>
-<script src="js/data/progress.js"></script>
-<script src="js/save.js"></script>
-<script src="js/store.js"></script>
-<script src="js/search.js"></script>
-<script src="js/views/wiki.js"></script>
-<script src="js/views/dashboard.js"></script>
-<script src="js/views/calendar.js"></script>
-<script src="js/views/tracker.js"></script>
-<script src="js/views/goals.js"></script>
-<script src="js/views/farms.js"></script>
-<script src="js/app.js"></script>
+<script src="js/modules/save.js"></script>
+<script src="js/modules/store.js"></script>
+<script src="js/modules/logic.js"></script>
+<script src="js/modules/activity.js"></script>
+<script src="js/modules/sync.js"></script>
+<script src="js/modules/recs.js"></script>
+<script src="js/modules/assistant.js"></script>
+<script src="js/modules/ui.js"></script>
+<script src="js/pages/farm.js"></script>
+<script src="js/pages/guide.js"></script>
+<script src="js/pages/later.js"></script>
+<script>SDV.ui.boot();</script>
 </body>
 </html>
