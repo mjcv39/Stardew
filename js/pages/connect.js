@@ -28,6 +28,25 @@
   const copy = (txt) => `<span class="cmd"><code>${esc(txt)}</code><button class="btn xs ghost" data-copy="${esc(txt)}">Copy</button></span>`;
   const step = (n, title, done, body) => `<section class="widget"><header><h2><span class="stepn ${done ? 'done' : ''}">${done ? '✓' : n}</span>${title}</h2></header><div class="w-body">${body}</div></section>`;
 
+  let os = /Win/i.test(navigator.platform || navigator.userAgent) ? 'win' : 'unix';
+  const site = () => (/^https?:$/.test(location.protocol) ? location.origin : 'https://YOUR-SITE');
+  const oneLiner = (o) => o === 'win'
+    ? `mkdir $HOME\\YourLittleFarm -Force; cd $HOME\\YourLittleFarm; Invoke-WebRequest ${site()}/companion/ylf-companion.js -OutFile ylf-companion.js; node ylf-companion.js`
+    : `mkdir -p ~/YourLittleFarm && cd ~/YourLittleFarm && curl -fsSLO ${site()}/companion/ylf-companion.js && node ylf-companion.js`;
+  const step1 = (found) => `<ol class="plain"><li>Install <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> (the “LTS” version) once — then close and reopen your terminal.</li>
+    <li>Open a terminal (<b>Windows:</b> search “PowerShell” · <b>Mac:</b> “Terminal”), pick your system and <b>paste this one line</b> — it downloads the companion into a folder called <code>YourLittleFarm</code> and starts it. No file to open or unblock:
+      <div class="tabs"><a class="tab ${os === 'win' ? 'on' : ''}" data-os="win">Windows (PowerShell)</a><a class="tab ${os === 'unix' ? 'on' : ''}" data-os="unix">Mac / Linux</a></div>
+      <span class="cmd block"><code>${esc(oneLiner(os))}</code><button class="btn xs ghost" data-copy="${esc(oneLiner(os))}">Copy</button></span></li>
+    <li>Leave that window open while you play. Next time, just run: ${os === 'win' ? copy('cd $HOME\\YourLittleFarm; node ylf-companion.js') : copy('cd ~/YourLittleFarm && node ylf-companion.js')}</li></ol>
+    <p class="status-line tone-${found ? 'good' : det.ok === false ? 'warn' : 'idle'}"><i class="dot"></i><span id="detLine">${found ? `Companion found${det.info ? ` · v${esc(det.info.version)} · ${det.info.savesFound} save(s)` : ''}` : det.ok === false ? esc(det.error) : 'Looking for the companion…'}</span></p>
+    <details class="mini" ${found ? '' : 'open'}><summary>It didn’t work? Common problems</summary><ul class="plain">
+      <li><b>“Cannot find module … ylf-companion.js”</b> — your terminal isn’t in the folder that contains the file. Use the one-line command above (it moves into the right folder first).</li>
+      <li><b>Browser says the download is “unsafe” / blocked</b> — browsers distrust downloaded <code>.js</code> files. That’s why the line above downloads it from the terminal instead. You can also <button class="btn xs ghost" id="copyCode">copy the program text</button>, paste it into Notepad / TextEdit, and save it as <code>ylf-companion.js</code> (Windows: “Save as type: All files”).</li>
+      <li><b>“node is not recognized”</b> — install Node.js (step 1) and reopen the terminal.</li>
+      <li><b>Windows asks about the firewall</b> — it’s fine to allow “private networks”; the companion only listens on your own computer.</li>
+      <li>Want to read it first? It’s one plain file, <a href="companion/ylf-companion.js" target="_blank" rel="noopener">view the source</a>.</li>
+      <li>Chrome/Edge may ask to allow “local network access” — choose <b>Allow</b>. Safari blocks it: add <code>--serve</code> to the command and open <code>http://127.0.0.1:48273</code> instead.</li>
+      <li>Custom port? <input id="cUrl" value="${esc(Live.cfg().url || Live.defaultUrl)}" size="26"> <button class="btn xs ghost" id="redetect">Retry</button></li></ul></details>`;
   P.render = () => {
     const paired = Live.paired(), ls = Live.state, farm = St.active();
     const found = det.ok === true || ls.phase === 'connected';
@@ -36,9 +55,7 @@
     <div class="widgets">
     <section class="widget span-2"><header><h2>⚡ Live tracking <small>(recommended)</small></h2></header><div class="w-body"><p>A small <b>companion app</b> runs on the PC where you play. It tells this site the moment the game saves, and — with the optional <b>SMAPI mod</b> — streams live updates (gold, time, location, items, friendships) while you play.</p>
       <div class="honest"><b>Honest limits:</b> a website cannot read your game or folders by itself, so this needs that one small program. Without the mod, updates arrive when the game saves (when you sleep). Phones/tablets can’t run the companion; use this on the gaming PC.</div></div></section>
-    ${step(1, 'Start the companion', found, `<ol class="plain"><li>Install <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> (the “LTS” version) once.</li><li><a class="btn" href="companion/ylf-companion.js" download>⬇ Download ylf-companion.js</a></li><li>Open a terminal in the download folder and run:<br>${copy('node ylf-companion.js')}</li></ol>
-      <p class="status-line tone-${found ? 'good' : det.ok === false ? 'warn' : 'idle'}"><i class="dot"></i><span id="detLine">${found ? `Companion found${det.info ? ` · v${esc(det.info.version)} · ${det.info.savesFound} save(s)` : ''}` : det.ok === false ? esc(det.error) : 'Looking for the companion…'}</span></p>
-      <details class="mini"><summary>Browser notes (read if it can’t find the companion)</summary><ul class="plain"><li>Chrome/Edge may ask to allow this site to “connect to devices on your local network” — choose <b>Allow</b>.</li><li>Safari blocks this kind of connection. Instead run <code>node ylf-companion.js --serve</code> and open <code>http://127.0.0.1:48273</code> — the whole app is then served by the companion (your data there is separate; use backup/restore to move it).</li><li>Custom port? <input id="cUrl" value="${esc(Live.cfg().url || Live.defaultUrl)}" size="26"> <button class="btn xs ghost" id="redetect">Retry</button></li></ul></details>`)}
+    ${step(1, 'Start the companion', found, step1(found))}
     ${step(2, 'Pair this website', paired && ls.phase === 'connected', paired ? `<p>✓ Paired. The companion only talks to this website (${esc(location.origin)}).</p><button class="btn ghost" id="unpair">Disconnect / forget pairing</button>` : `<p>The companion shows a <b>6-digit code</b> in its window. Type it here to approve this website. (Codes are one-time and expire after 10 minutes.)</p><form id="pairForm" class="inline"><input name="code" inputmode="numeric" maxlength="7" placeholder="123 456" autocomplete="off" required><button class="btn" ${found ? '' : 'disabled'}>Pair</button></form>${found ? '' : '<p class="muted">Start the companion first (step 1).</p>'}`)}
     ${step(3, 'Choose your farm', !!(farm && farm.link && farm.link.mode === 'companion'), ls.phase === 'connected' ? `<div id="saveList">${saves ? savesHtml() : '<p class="muted">Loading your saves…</p>'}</div>` : '<p class="muted">Pair first (step 2), then your farms from the Saves folder appear here.</p>')}
     ${step(4, 'Optional: real-time mod', ls.mod, `<p>The <b>Your Little Farm SMAPI mod</b> sends live snapshots (gold, time, location, skills, friendships, collections, buildings…) to the companion while you play. Status: <b>${ls.mod ? 'connected ✓' : 'not detected'}</b>.</p><p class="muted">The mod source is in <code>companion/YourLittleFarmMod</code>. It has <b>not been compiled or tested against the real game yet</b>, and there is no prebuilt download — see its README. Everything above works without it.</p>`)}
@@ -50,6 +67,8 @@
 
   P.bind = (root, rerender) => {
     const on = (sel, ev, fn) => U.$$(sel, root).forEach((el) => el.addEventListener(ev, (e) => fn(el, e)));
+    on('[data-os]', 'click', (el) => { os = el.dataset.os; rerender(); });
+    on('#copyCode', 'click', async () => { try { const r = await fetch('companion/ylf-companion.js'); await navigator.clipboard.writeText(await r.text()); U.toast('Program text copied — paste it into a new text file named ylf-companion.js', 'good'); } catch (e) { U.toast('Could not copy automatically — open “view the source” and copy it by hand.', 'bad'); } });
     on('[data-copy]', 'click', (el) => { navigator.clipboard && navigator.clipboard.writeText(el.dataset.copy); U.toast('Copied'); });
     const cf = U.$('#cFile', root); if (cf) cf.addEventListener('change', () => { C.importFile(cf.files[0]); cf.value = ''; });
     const lf = U.$('#linkFolder', root); if (lf) lf.addEventListener('click', C.linkFolder);

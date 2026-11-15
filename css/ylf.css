@@ -112,3 +112,5 @@ body[data-theme=dark] .tag.auto { background: #2f4a2a; color: #cfe8c0; } body[da
 .stepn { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--yellow); color: #4a3626; font-family: var(--body); font-size: .9rem; } .stepn.done { background: var(--sage); }
 .cmd { display: inline-flex; gap: 8px; align-items: center; margin: 4px 0; } .status-line { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--paper2); border-radius: 10px; font-weight: 700; } .inline { display: flex; gap: 8px; } .inline input { flex: 1; font-size: 1.2rem; letter-spacing: .2em; text-align: center; }
 .connect .widgets { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); } .connect .hero-card .pill { margin-left: auto; }
+
+.cmd.block { display: flex; margin: 8px 0; } .cmd.block code { flex: 1; padding: 8px 10px; white-space: pre-wrap; word-break: break-all; } .cmd code { user-select: all; }
