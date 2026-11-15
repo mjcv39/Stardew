@@ -1,0 +1,75 @@
+/* Fish. time windows are [startHour,endHour) in 24h; end > 24 wraps (26 = 2am). weather: Any | Sunny | Rainy. id = in-game item id (used for save detection). */
+(function () {
+  const A = ['Spring', 'Summer', 'Fall', 'Winter'];
+  const F = (id, name, seasons, weather, time, location, price, diff, notes = '', extra = {}) => ({ id: SDV.util.slug(name), itemId: id, name, seasons: seasons === 'Any' ? A : seasons.split('/'), allSeasons: seasons === 'Any', weather, time, location, price, diff, notes, season: seasons === 'Any' ? 'Any' : seasons.split('/')[0], ...extra });
+  const D = (SDV.data.fish = []);
+  const day = [[6, 19]], night = [[18, 26]], all = null;
+  D.push(
+    F(129, 'Anchovy', 'Spring/Fall', 'Any', all, 'Ocean', 30, 30),
+    F(131, 'Sardine', 'Spring/Fall/Winter', 'Any', day, 'Ocean', 40, 30),
+    F(147, 'Herring', 'Spring/Winter', 'Any', all, 'Ocean', 30, 25),
+    F(130, 'Tuna', 'Summer/Winter', 'Any', day, 'Ocean', 100, 70),
+    F(150, 'Red Snapper', 'Summer/Fall', 'Rainy', day, 'Ocean', 50, 40),
+    F(146, 'Red Mullet', 'Summer/Winter', 'Any', day, 'Ocean', 75, 55),
+    F(128, 'Pufferfish', 'Summer', 'Sunny', [[12, 16]], 'Ocean, Ginger Island ocean', 200, 80),
+    F(149, 'Octopus', 'Summer', 'Any', [[6, 13]], 'Ocean', 150, 95),
+    F(151, 'Squid', 'Winter', 'Any', [[18, 26]], 'Ocean', 80, 75),
+    F(154, 'Sea Cucumber', 'Fall/Winter', 'Any', [[6, 26]], 'Ocean', 75, 40),
+    F(155, 'Super Cucumber', 'Summer/Fall', 'Any', [[18, 26]], 'Ocean', 250, 80),
+    F(148, 'Eel', 'Spring/Fall', 'Rainy', [[16, 26]], 'Ocean', 85, 70),
+    F(705, 'Albacore', 'Fall/Winter', 'Any', [[6, 11], [18, 26]], 'Ocean', 75, 60),
+    F(708, 'Halibut', 'Spring/Summer/Winter', 'Any', [[6, 11], [19, 26]], 'Ocean', 80, 50),
+    F(164, 'Sandfish', 'Any', 'Any', [[6, 20]], 'Calico Desert', 75, 65),
+    F(165, 'Scorpion Carp', 'Any', 'Any', [[6, 20]], 'Calico Desert', 150, 90),
+    F(132, 'Bream', 'Any', 'Any', [[18, 26]], 'Town River', 45, 35),
+    F(143, 'Catfish', 'Spring/Fall', 'Rainy', [[6, 24]], 'River (Town/Forest), Secret Woods pond', 200, 75),
+    F(702, 'Chub', 'Any', 'Any', all, 'Forest River, Mountain Lake', 50, 35),
+    F(704, 'Dorado', 'Summer', 'Any', [[6, 19]], 'Forest River', 100, 78),
+    F(142, 'Carp', 'Spring/Summer/Fall', 'Any', all, 'Mountain Lake, Secret Woods, Sewers', 30, 15),
+    F(136, 'Largemouth Bass', 'Any', 'Any', [[6, 19]], 'Mountain Lake', 100, 50),
+    F(707, 'Lingcod', 'Winter', 'Any', all, 'Rivers, Mountain Lake', 120, 85),
+    F(141, 'Perch', 'Winter', 'Any', all, 'Rivers, Mountain Lake, Cindersap Forest pond', 55, 35),
+    F(144, 'Pike', 'Summer/Winter', 'Any', all, 'Town River, Forest River', 100, 60),
+    F(138, 'Rainbow Trout', 'Summer', 'Sunny', [[6, 19]], 'Rivers, Mountain Lake', 65, 45),
+    F(139, 'Salmon', 'Fall', 'Any', [[6, 19]], 'Town River, Forest River', 75, 50),
+    F(706, 'Shad', 'Spring/Summer/Fall', 'Rainy', [[9, 26]], 'Town River', 60, 45),
+    F(137, 'Smallmouth Bass', 'Spring/Fall', 'Any', all, 'Town River, Forest River, Mountain Lake', 50, 28),
+    F(698, 'Sturgeon', 'Summer/Winter', 'Any', [[6, 19]], 'Mountain Lake', 200, 78),
+    F(145, 'Sunfish', 'Spring/Summer', 'Sunny', [[6, 19]], 'Town River, Forest River', 30, 30),
+    F(699, 'Tiger Trout', 'Fall/Winter', 'Any', [[6, 19]], 'Rivers', 150, 60),
+    F(140, 'Walleye', 'Fall/Winter', 'Rainy', [[12, 26]], 'Rivers, Mountain Lake, Cindersap Forest pond', 105, 45),
+    F(734, 'Woodskip', 'Any', 'Any', all, 'Secret Woods', 75, 50),
+    F(700, 'Bullhead', 'Any', 'Any', all, 'Mountain Lake', 75, 46),
+    F(701, 'Tilapia', 'Summer/Fall', 'Any', [[6, 14]], 'Ocean', 75, 50),
+    F(156, 'Ghostfish', 'Any', 'Any', all, 'Mines (floors 20 & 60), Skull Cavern', 45, 50),
+    F(158, 'Stonefish', 'Any', 'Any', all, 'Mines (floor 20)', 300, 65),
+    F(161, 'Ice Pip', 'Any', 'Any', all, 'Mines (floor 60)', 500, 85),
+    F(162, 'Lava Eel', 'Any', 'Any', all, 'Mines (floor 100)', 700, 90),
+    F(796, 'Slimejack', 'Any', 'Any', all, 'Mutant Bug Lair (Sewers)', 100, 55),
+    F(795, 'Void Salmon', 'Any', 'Any', all, 'Witch\'s Swamp', 150, 80),
+    F(269, 'Midnight Carp', 'Fall/Winter', 'Any', [[22, 26]], 'Mountain Lake', 150, 55),
+    F(800, 'Blobfish', 'Winter', 'Any', [[18, 26]], 'Ocean (Night Market submarine)', 500, 75, 'Caught at the Night Market submarine (Winter 15–17).'),
+    F(798, 'Midnight Squid', 'Winter', 'Any', [[18, 26]], 'Night Market submarine', 100, 55, 'Night Market (Winter 15–17).'),
+    F(799, 'Spook Fish', 'Winter', 'Any', [[18, 26]], 'Night Market submarine', 220, 60, 'Night Market (Winter 15–17).'),
+    F(837, 'Lionfish', 'Any', 'Any', all, 'Ginger Island (ocean, west/ north)', 100, 50),
+    F(838, 'Blue Discus', 'Any', 'Any', all, 'Ginger Island (freshwater pond)', 120, 60),
+    F(836, 'Stingray', 'Any', 'Any', all, 'Pirate Cove (Ginger Island)', 180, 80),
+    F(682, 'Mutant Carp', 'Any', 'Any', all, 'Sewers', 1000, 80, 'Legendary-type; also in Fish Pond (Carp).'),
+    F(159, 'Crimsonfish', 'Summer', 'Any', all, 'Ocean (East Pier)', 1500, 95, 'Legendary. Needs Master Angler / Fishing level 5 to catch.', { legendary: true }),
+    F(160, 'Angler', 'Fall', 'Any', all, 'Town River (north of JojaMart)', 900, 85, 'Legendary.', { legendary: true }),
+    F(163, 'Legend', 'Spring', 'Rainy', [[6, 20]], 'Mountain Lake', 5000, 110, 'Legendary. Requires Fishing level 10.', { legendary: true }),
+    F(775, 'Glacierfish', 'Winter', 'Any', all, 'Forest River (south end)', 1000, 100, 'Legendary.', { legendary: true }),
+  );
+  SDV.data.crabpot = [
+    { id: 'lobster', name: 'Lobster', habitat: 'Ocean', price: 120 }, { id: 'crab', name: 'Crab', habitat: 'Ocean', price: 100 }, { id: 'shrimp', name: 'Shrimp', habitat: 'Ocean', price: 60 },
+    { id: 'cockle', name: 'Cockle', habitat: 'Ocean', price: 50 }, { id: 'mussel', name: 'Mussel', habitat: 'Ocean', price: 30 }, { id: 'oyster', name: 'Oyster', habitat: 'Ocean', price: 40 },
+    { id: 'periwinkle', name: 'Periwinkle', habitat: 'Freshwater', price: 20 }, { id: 'snail', name: 'Snail', habitat: 'Freshwater', price: 65 }, { id: 'crayfish', name: 'Crayfish', habitat: 'Freshwater', price: 75 },
+  ];
+  // Fishing rules summarising what matters in play
+  SDV.data.fishingTips = [
+    'Rain adds Rainy fish (Catfish, Eel, Red Snapper, Shad, Walleye, Legend). Rain never changes ocean tides.',
+    'Fishing windows use the same time as in-game: 6am–2am.',
+    'Treasure chests and quality come from your fishing level and bar size.',
+    'Bait: Bait, Wild Bait, Magnet. Tackle: Spinner, Trap Bobber, Cork Bobber, Treasure Hunter, Barbed Hook, Dressed Spinner.',
+  ];
+})();
