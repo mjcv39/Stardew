@@ -97,6 +97,7 @@
 
   // ---- boot ----
   St.load();
+  const fav = document.getElementById('favicon'); if (fav && SDV.sprites) fav.href = SDV.sprites.get('Sunflower', 'crop');
   $('#menuBtn').addEventListener('click', () => document.body.classList.toggle('nav-open'));
   bindSearch(); renderFarmPick();
   document.addEventListener('change', (e) => { if (e.target.matches && e.target.matches('[data-manual]')) { /* handled in wiki view */ } });

@@ -53,10 +53,11 @@
   };
   U.catColor = (c) => CATCOL[c] || '#b5835a';
   U.icon = (name, cat, size = 'md') =>
-    `<span class="ico ico-${size}" style="--c:${U.catColor(cat)}" aria-hidden="true">${U.emoji(name, cat)}</span>`;
+    `<span class="ico ico-${size}" style="--c:${U.catColor(cat)}" aria-hidden="true">${SDV.sprites ? SDV.sprites.img(name, cat) : U.emoji(name, cat)}</span>`;
 
   // --- Villager portraits (procedural pixel art) ---
   const pcache = {};
+  const ACC = { Maru: 'glasses', Harvey: 'stache', Lewis: 'hat', Wizard: 'hat', Willy: 'cap', Gus: 'stache', Pierre: 'stache', George: 'stache', Evelyn: 'bun', Penny: 'freckles', Sam: 'freckles', Jas: 'bun', Pam: 'freckles', Linus: 'cap' };
   U.portrait = (v, size = 'md') => {
     const key = v.name;
     if (!pcache[key]) {
@@ -75,6 +76,15 @@
       else if (style === 5) { px(3, 1, 10, 4, hair); px(2, 4, 2, 3, hair); px(12, 4, 2, 3, hair); } // poofy
       else { px(3, 2, 10, 3, hair); px(3, 5, 1, 3, hair); px(12, 5, 1, 3, hair); } // default
       px(6, 6, 1, 2, eye); px(9, 6, 1, 2, eye); px(7, 9, 2, 1, '#b5604a'); // eyes, mouth
+      px(5, 8, 1, 1, '#f0a090'); px(10, 8, 1, 1, '#f0a090'); // blush
+      const acc = ACC[v.name];
+      if (acc === 'glasses') { px(5, 5, 3, 1, '#2a2a2a'); px(8, 5, 3, 1, '#2a2a2a'); px(5, 7, 3, 1, '#2a2a2a'); px(8, 7, 3, 1, '#2a2a2a'); px(5, 6, 1, 1, '#2a2a2a'); px(7, 6, 2, 1, '#2a2a2a'); px(10, 6, 1, 1, '#2a2a2a'); }
+      if (acc === 'stache') px(6, 8, 4, 1, hair);
+      if (acc === 'hat') { px(3, 1, 10, 2, '#5a3a8a'); px(5, 0, 6, 1, '#5a3a8a'); px(2, 3, 12, 1, '#4a2a7a'); }
+      if (acc === 'cap') { px(3, 1, 10, 2, '#3a5a8a'); px(2, 3, 12, 1, '#2a4a7a'); }
+      if (acc === 'bun') { px(6, 0, 4, 2, hair); }
+      if (acc === 'freckles') { px(5, 7, 1, 1, '#c8805a'); px(10, 7, 1, 1, '#c8805a'); px(6, 8, 1, 1, '#c8805a'); px(9, 8, 1, 1, '#c8805a'); }
+      px(4, 10, 8, 1, 'rgba(0,0,0,.12)'); // jaw shade
       pcache[key] = c.toDataURL();
     }
     return `<img class="portrait portrait-${size}" src="${pcache[key]}" alt="${U.esc(v.name)}" width="16" height="16">`;

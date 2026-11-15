@@ -19,7 +19,7 @@ Detection targets save formats 1.5/1.6 on a best-effort basis; anything not foun
 The sandbox this was built in could not reach stardewvalleywiki.com, so datasets in `js/data/` were **written from game knowledge, not scraped**. Fish, crops, bundles, birthdays and most gift loves are well covered; some lists are **intentionally partial** (likes/hates, weapons, monsters stats, special orders, heart-event details) and some values may be off. Every entry links to the official wiki page for verification. Data is plain structured JS — fix or extend it in one place and the whole app updates. A natural next step is a script that pulls the wiki's MediaWiki API into these files.
 
 ## Art
-Game art is copyrighted, so none is bundled: items use emoji on pixel-framed tiles, villagers get generated 16×16 pixel portraits (`SDV.util.portrait`). You can swap in your own sprites by editing `icon()` / `portrait()` in `js/core.js`.
+Game art is copyrighted, so none is bundled. Every image is original pixel art drawn in code by `js/sprites.js` (item templates tinted to the real item colours) and `SDV.util.portrait` (villager portraits). They are recognisable stand-ins, not copies. To use your own art, edit `icon()` / `portrait()` in `js/core.js`.
 
 ## Tests
 `node tests/smoke.js` (needs Playwright and a static server on :8123) loads ~700 routes, imports `tests/sample-save.xml`, and fails on JS errors.
